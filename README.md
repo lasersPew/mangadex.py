@@ -9,22 +9,28 @@ A python wrapper for the MangaDex API V5. It uses the requests library and all t
 ### PyPI
 
 ```sh
-pip install --Upgrade mangadex
+pip install --upgrade mangadex
 ```
 
-### Installing via setuptools
-
+## Manual Install/ Development
+1. First create a virtualenv(optional)
+```bash
+python3 -m virtualenv venv/
+```
+2. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+3. Install module using setuptools
 ```sh
-python setup.py install --user
+python setup.py install
 ```
-
 ## Using the module
 
 ```py
 >>> import mangadex
 >>> api = mangadex.Api()
 ```
-
 ## API Calls
 
 ### Getting the latest manga chapters
