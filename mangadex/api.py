@@ -16,6 +16,7 @@ from mangadex import (
     URLRequest,
 )
 
+
 class Api:
     def __init__(self, timeout=5) -> None:
         self.URL = "https://api.mangadex.org"
@@ -87,7 +88,7 @@ class Api:
 
         Parameters
         -------------
-        This parameters may be used by ohter methods
+        This parameters may be used by other methods
         ### QueryParams:
 
         limit : `int`
@@ -99,7 +100,7 @@ class Api:
         includedTags : `List[Tag.id]`
         includedTagsMode: `str`. Default `"AND"`. Enum: `"AND"` `"OR"`
         excludedTags : `List[Tag.id]`
-        exludedTagsMode : `str`. Default `"AND"`, Enum : `"AND"`, `"OR"`
+        excludedTagsMode : `str`. Default `"AND"`, Enum : `"AND"`, `"OR"`
         status : `List[str]`. Items Enum : `"ongoing"`, `"completed"`, `"hiatus"`, `"cancelled"`
         originalLanguage : `List[str]`
         publicationDemographic : `List[str]`. Items Enum: `"shounen"` `"shoujo"` `"josei"` `"seinen"` `"none"`
@@ -171,7 +172,7 @@ class Api:
         description : `Dict[str,str]`. The alt titles in different languages
         authors : `List[str]`. The list of author id's
         artists : `List[str]`. The list of artist id's
-        links : `Dict[str,str]`. The links in differents sites (al, ap, bw, mu, etc).
+        links : `Dict[str,str]`. The links in different sites (al, ap, bw, mu, etc.).
         Please refer to the [documentation](https://api.mangadex.org/docs.html#section/Static-data/Manga-links-data)
         originalLanguage : `str`. The original Language
         lastVolume : `str`. The last volume
@@ -215,7 +216,7 @@ class Api:
         return resp["volumes"]
 
     def update_manga(
-        self, manga_id: str, ObjReturn: bool = False, **kwargs
+            self, manga_id: str, ObjReturn: bool = False, **kwargs
     ) -> Union[Manga, None]:
         """
         Updates a manga parameters
@@ -233,7 +234,7 @@ class Api:
         description : `Dict[str,str]`. The alt titles in different languages
         authors : `List[str]`. The list of author id's
         artists : `List[str]`. The list of artist id's
-        links : `Dict[str,str]`. The links in differents sites (al, ap, bw, mu, etc). Please refer to the [documentation](https://api.mangadex.org/docs.html#section/Static-data/Manga-links-data)
+        links : `Dict[str,str]`. The links in different sites (al, ap, bw, mu, etc.). Please refer to the [documentation](https://api.mangadex.org/docs.html#section/Static-data/Manga-links-data)
         originalLanguage : `str`. The original Language
         lastVolume : `str`. The last volume
         lastChapter : `str`. The last chapter
@@ -261,15 +262,15 @@ class Api:
 
         Parameters
         ------------
-        id : `str`. The manga id
+        manga_id : `str`. The manga id
         """
         url = f"{self.URL}/manga{manga_id}"
         URLRequest.request_url(url, "DELETE", headers=self.bearer, timeout=self.timeout)
 
-    def get_manga_read_markes(self, manga_id: str) -> List[Chapter]:
+    def get_manga_read_markers(self, manga_id: str) -> List[Chapter]:
         # this needs a performance update
         """
-        A list of Chapter Id's That are marked fro the given manga Id
+        A list of Chapter ids That are marked from the given manga id
 
         Parameters
         ------------
@@ -314,7 +315,7 @@ class Api:
 
         limit : `int`
         offset : `int`
-        translatedLanguage : `List[str]`. The translated laguages to query
+        translatedLanguage : `List[str]`. The translated languages to query
         createdAtSince : `str`. Datetime String with the following format YYYY-MM-DDTHH:MM:SS
         updatedAtSince : `str`. Datetime String with the following format YYYY-MM-DDTHH:MM:SS
 
@@ -345,7 +346,7 @@ class Api:
     def chapter_list(self, **kwargs) -> List[Chapter]:
         """
         The list of chapters.
-        To get the chpaters of a specific manga the manga parameter must be provided
+        To get the chapters of a specific manga the manga parameter must be provided
 
         Parameters
         -----------
@@ -366,7 +367,7 @@ class Api:
 
         Returns
         ----------
-        `List[Chpater]` A list of Chpater Objects
+        `List[Chapter]` A list of Chapter Objects
 
         Raises
         -------------
@@ -383,7 +384,7 @@ class Api:
 
         Parameters
         ------------
-        id : `str` The chapter id
+        chapter_id : `str` The chapter id
 
         Returns
         ------------
@@ -425,7 +426,7 @@ class Api:
 
     def get_author_by_id(self, author_id: str) -> Author:
         """
-        Get's an author by its id
+        Requests the author by its id
 
         Parameters
         -------------
@@ -444,7 +445,7 @@ class Api:
         return Author.author_from_dict(resp)
 
     def create_author(
-        self, name: str, version: int, ObjReturn: bool = False
+            self, name: str, version: int, ObjReturn: bool = False
     ) -> Union[Author, None]:
         """
         Creates an Author
@@ -453,7 +454,7 @@ class Api:
         --------------
         name : `str`. The author name
         version : `int`. The version of the author
-        ObjReturn : `bool`.  `True` if you want a Author Object return
+        ObjReturn : `bool`.  `True` if you want to return an Author Object
 
         Returns
         --------------
@@ -468,12 +469,12 @@ class Api:
             return Author.author_from_dict(resp)
 
     def update_author(
-        self,
-        *,
-        author_id: str,
-        version: int,
-        name: Union[str, None] = None,
-        ObjReturn: bool = False,
+            self,
+            *,
+            author_id: str,
+            version: int,
+            name: Union[str, None] = None,
+            ObjReturn: bool = False,
     ) -> Union[Author, None]:
         """
         Updates an Author
@@ -483,7 +484,7 @@ class Api:
         author_id : `str`. Required. The author id
         version : `int`. Required
         name : `str`.
-        ObjReturn : `bool`.  `True` if you want a Author Object return
+        ObjReturn : `bool`.  `True` if you want to return an Author Object
 
         Returns
         -----------
@@ -533,12 +534,12 @@ class Api:
         return User.user_from_dict(resp)
 
     def scanlation_group_list(
-        self,
-        *,
-        limit: Union[None, int] = None,
-        offset: Union[None, int] = None,
-        group_ids: Union[None, List[str]] = None,
-        name: Union[str, None] = None,
+            self,
+            *,
+            limit: Union[None, int] = None,
+            offset: Union[None, int] = None,
+            group_ids: Union[None, List[str]] = None,
+            name: Union[str, None] = None,
     ) -> List[ScanlationGroup]:
         """
         Get the scanlation groups list
@@ -583,7 +584,8 @@ class Api:
         ---------------
         `ApiError`
         """
-        self.__auth_handler(json_payload={"username": username, "password": password, "client_id": client_id, "client_secret": client_secret})
+        self.__auth_handler(json_payload={"username": username, "password": password, "client_id": client_id,
+                                          "client_secret": client_secret})
 
     def me(self) -> User:
         """
@@ -620,7 +622,7 @@ class Api:
 
     def get_my_followed_groups(self, **kwargs) -> List[ScanlationGroup]:
         """
-        Get the Scanlination Groups you follow
+        Get the Scanlation Groups you follow
 
         Parameters
         -------------
@@ -678,7 +680,7 @@ class Api:
         return resp["status"]
 
     def get_all_manga_reading_status(
-        self, status: Union[str, None] = None
+            self, status: Union[str, None] = None
     ) -> Dict[str, str]:
         """
         Get all Manga followed by the user reading status
@@ -733,7 +735,7 @@ class Api:
 
     def update_manga_reading_status(self, manga_id: str, status: str) -> None:
         """
-        Update the reading stauts of a manga
+        Update the reading status of a manga
 
         Parameters
         -------------
@@ -759,8 +761,8 @@ class Api:
 
         Parameters
         --------------
-        id : `str`. The manga id.
-        listId : `str`. The list id.
+        manga_id : `str`. The manga id.
+        list_id : `str`. The list id.
         """
         url = f"{self.URL}/{manga_id}/list{list_id}"
         URLRequest.request_url(url, "POST", headers=self.bearer, timeout=self.timeout)
@@ -771,18 +773,18 @@ class Api:
 
         Parameters
         ------------
-        id : `str`. The manga id
-        listId : `str`. The list id
+        manga_id : `str`. The manga id
+        list_id : `str`. The list id
         """
         url = f"{self.URL}/manga/{manga_id}/list/{list_id}"
         URLRequest.request_url(url, "DELETE", headers=self.bearer, timeout=self.timeout)
 
     def create_customlist(
-        self,
-        name: str,
-        visibility: str = "public",
-        manga: Union[List[str], None] = None,
-        version: int = 1,
+            self,
+            name: str,
+            visibility: str = "public",
+            manga: Union[List[str], None] = None,
+            version: int = 1,
     ) -> None:
         """
         Creates a custom list
@@ -796,9 +798,7 @@ class Api:
         manga : `List[str]`. List of manga ids
         """
         url = f"{self.URL}/list"
-        params = {"name": name, "version": version}
-        params["visibility"] = visibility
-        params["manga[]"] = manga
+        params = {"name": name, "version": version, "visibility": visibility, "manga[]": manga}
         URLRequest.request_url(url, "POST", params=params, timeout=self.timeout)
 
     def get_customlist(self, customlist_id: str, **kwargs) -> CustomList:
@@ -865,7 +865,7 @@ class Api:
         ------------
         ### QueryParams:
         limit : `int`. The limit of custom lists to return
-        offset : `int`. The amout of offset
+        offset : `int`. The amount of offset
 
         Returns
         ----------
@@ -887,7 +887,7 @@ class Api:
 
         ### QueryParams:
         limit : `int`. The limit of custom lists to return
-        offset : `int`. The amout of offset
+        offset : `int`. The amount of offset
 
         Returns
         ----------
@@ -916,8 +916,8 @@ class Api:
 
         Optional parameters
         -------------------------
-        manga : List[str]. Manga ids
-        ids : List[str]. Cover ids
+        manga_ids : List[str]. Manga ids
+        chapter_ids : List[str]. Cover ids
         uploaders : List[str]. User ids
         """
         params = Api.__parse_coverart_params(kwargs)
@@ -927,7 +927,7 @@ class Api:
 
     def get_cover(self, cover_id: str) -> CoverArt:
         """
-        Gets a cover image
+        Requests a cover image
 
         Parameters
         --------------
@@ -942,7 +942,7 @@ class Api:
         return CoverArt.cover_from_dict(resp)
 
     def upload_cover(
-        self, manga_id: str, filename: str, ObjReturn: bool = False
+            self, manga_id: str, filename: str, ObjReturn: bool = False
     ) -> Union[CoverArt, None]:
         """
         Uploads a cover
@@ -971,12 +971,12 @@ class Api:
         return CoverArt.cover_from_dict(resp) if ObjReturn else None
 
     def edit_cover(
-        self,
-        cover_id: str,
-        description: str,
-        volume: Union[str, None] = None,
-        version: Union[int, None] = None,
-        ObjReturn: bool = False,
+            self,
+            cover_id: str,
+            description: str,
+            volume: Union[str, None] = None,
+            version: Union[int, None] = None,
+            ObjReturn: bool = False,
     ) -> Union[None, CoverArt]:
         """
         Edit a cover parameters
