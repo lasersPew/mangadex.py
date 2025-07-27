@@ -31,4 +31,4 @@ jobs:
     - name: Test with pytest
       run: |
         conda install pytest python-dotenv
-        pytest
+        PYTHONPATH=. pytest
