@@ -11,3 +11,22 @@ __author__ = "Eduardo Ceja"
 __version__ = "2.7"
 __license__ = "MIT"
 __copyright__ = "Copyright (c) 2021 Eduardo Ceja"
+
+__all__ = [
+    "Api",
+    "ApiClient",
+    "Auth",
+    "ApiError",
+    "Author",
+    "Follows",
+    "ScanlationGroup",
+    "User",
+    "Chapter",
+    "Cover",
+    "CustomList",
+    "Manga",
+    "MangaList",
+    "Tag",
+    "URLRequest",
+]
+

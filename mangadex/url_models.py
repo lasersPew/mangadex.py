@@ -15,11 +15,10 @@ except NameError:
     from past.builtins import basestring
 
 try:
-    from urllib.parse import urlencode, urlparse
+    from urllib.parse import urlencode
 except ImportError:
     from urllib import urlencode
 
-    from urlparse import urlparse
 
 
 class URLRequest:
@@ -114,7 +113,7 @@ class URLRequest:
         try:
             data = json.loads(content)
             URLRequest._check_api_error(data)
-        except json.JSONDecodeError as e:
+        except json.JSONDecodeError:
             # the ping response doen't come in JSON and its just a string return it that way and throw error in class if needed
             data = content.decode("UTF-8")
         return data
