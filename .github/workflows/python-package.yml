@@ -3,10 +3,10 @@ name: CI
 on:
   push:
     branches: [ main, devel ]
-    paths: [ 'mangadex/**', 'pyproject.toml', 'uv.lock' ]
+    paths: [ 'mangadex/**', 'pyproject.toml', 'uv.lock', '.github/workflows/**' ]
   pull_request:
     branches: [ main, devel ]
-    paths: [ 'mangadex/**', 'pyproject.toml', 'uv.lock' ]
+    paths: [ 'mangadex/**', 'pyproject.toml', 'uv.lock', '.github/workflows/**' ]
   workflow_dispatch:
 
 
