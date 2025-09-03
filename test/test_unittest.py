@@ -22,7 +22,8 @@ class TestApi:
     def test_ping(self):
         """Tests the infrastructure"""
         ping = self.api.ping()
-        saved_resp = URLRequest.request_url(f"{self.api.url}/ping", "GET", self.timeout)
+        saved_resp = URLRequest.request_url(
+            f"{self.api.url}/ping", "GET", self.timeout)
         assert ping == saved_resp
 
 
@@ -80,7 +81,8 @@ class TestManga:
         self.manga.manga_feed(resp.manga_id)
 
     def test_ViewMangaById(self):
-        self.manga.get_manga_by_id(manga_id="88796863-04bd-49d4-ad85-d9f993e95109")
+        self.manga.get_manga_by_id(
+            manga_id="88796863-04bd-49d4-ad85-d9f993e95109")
 
     def test_RandomManga(self):
         self.manga.random_manga()
@@ -160,7 +162,8 @@ class TestAuthor:
         manual_authors = [
             md.Author.author_from_dict(author) for author in raw_response["data"]
         ]
-        manual_authors = dict(((author.author_id, author) for author in manual_authors))
+        manual_authors = dict(((author.author_id, author)
+                              for author in manual_authors))
 
         for author in author_ids:
             api_author = next((a for a in resp if a.author_id == author), None)
@@ -253,7 +256,8 @@ class TestAuth:
         self.login()
         user = self.user.me()
 
-        assert user.username == os.environ.get("md_username"), "This user is invalid"
+        assert user.username == os.environ.get(
+            "md_username"), "This user is invalid"
 
     def test_GetUserCustomLists(self):
         self.login()
