@@ -57,7 +57,8 @@ class URLRequest:
                 raise
         elif method == "POST":
             try:
-                resp = requests.post(url, data=params, headers=headers, timeout=timeout)
+                resp = requests.post(
+                    url, data=params, headers=headers, timeout=timeout)
             except requests.RequestException as e:
                 print(f"An error has occurred: {e}")
                 raise
@@ -83,7 +84,8 @@ class URLRequest:
 
         content = resp.content
         data = URLRequest.__parse_data(
-            content if isinstance(content, basestring) else content.decode("utf-8")
+            content if isinstance(
+                content, basestring) else content.decode("utf-8")
         )
         return data
 
@@ -115,7 +117,8 @@ class URLRequest:
             data = json.loads(content)
             URLRequest._check_api_error(data)
         except json.JSONDecodeError as e:
-            # the ping response doen't come in JSON and its just a string return it that way and throw error in class if needed
+            print(f"JSON Decode error: {e}")
+            # the ping response doesn't come in JSON and it's just a string return it that way and throw error in class if needed
             data = content.decode("UTF-8")
         return data
 

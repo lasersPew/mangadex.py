@@ -40,6 +40,7 @@ class ApiClientError(BaseError):
     Args:
         BaseError (_type_): _description_
     """
+
     def __init__(self, data: dict, message: str) -> None:
         super(ApiClientError, self).__init__(data, message=message)
         self.data = data

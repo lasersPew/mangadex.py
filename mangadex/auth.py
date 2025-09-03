@@ -11,6 +11,7 @@ from mangadex.url_models import URLRequest
 
 class Api:
     """Class that checks for Infrastructure"""
+
     def __init__(self):
         self.url = "https://api.mangadex.org"
         self.timeout = 5
@@ -37,6 +38,7 @@ class Api:
 
 class Auth:
     """Class that provides Authentication"""
+
     def __init__(self):
         """Authentication class"""
         self.auth_url = "https://auth.mangadex.org"
@@ -46,7 +48,7 @@ class Auth:
         self.client_id = None
         self.client_secret = None
 
-    def set_bearer_token(self, bearer_token:dict) -> None:
+    def set_bearer_token(self, bearer_token: dict) -> None:
         """Sets the bearer token. Used by other functions
 
         Args:
@@ -115,6 +117,7 @@ class Auth:
 
 class ApiClient(Auth):
     """ Class that checks for user's API Clients"""
+
     def __init__(self, auth: Union[Auth, None]):
         super().__init__()
         self.api = Api()
@@ -164,7 +167,8 @@ class ApiClient(Auth):
         client.created_at = attributes["createdAt"]
         client.updated_at = attributes["updatedAt"]
         for relation in attributes["relationships"]:
-            client.relations.append({"type": relation["type"], "id": relation["id"]})
+            client.relations.append(
+                {"type": relation["type"], "id": relation["id"]})
 
         return client
 
@@ -211,7 +215,7 @@ class ApiClient(Auth):
 
         Args:
             limit: Number of clients to show
-            offset: 
+            offset
 
         Returns:
             ApiClient:
@@ -267,9 +271,9 @@ class ApiClient(Auth):
         return ApiClient.client_from_dict(resp) if obj_return else None
 
     def edit_api_client(
-        self, client_id: str,
-        description: str,
-        obj_return: bool = True)-> Optional["ApiClient"]:
+            self, client_id: str,
+            description: str,
+            obj_return: bool = True) -> Optional["ApiClient"]:
         """Change an API Client description
 
         Returns:
@@ -353,7 +357,7 @@ if __name__ == "__main__":
 
     load_dotenv("mangadex/api/.env")
     api = Api()
-    
+
     # auth = Auth()
     # auth.login(os.environ['md_username'], os.environ['md_password'],
     #            os.environ['client_id'], os.environ['client_secret'])
