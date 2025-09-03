@@ -12,6 +12,7 @@ from .auth import Api, Auth
 
 class Author:
     """Class providing Author Information"""
+
     def __init__(self, auth=Union[Auth, None]) -> None:
         """Author Information class
 
@@ -48,7 +49,8 @@ class Author:
             pass
 
         if resp["type"] != "author" or not resp:
-            raise ValueError(f"The data provided is not Author is : {resp['type']}")
+            raise ValueError(
+                f"The data provided is not Author is : {resp['type']}")
 
         author = cls()
 
@@ -78,7 +80,7 @@ class Author:
         Returns:
             List[Author]: List of Authors
         """
-        
+
         resp = resp["data"]
         authors_list = []
         for elem in resp:
@@ -109,7 +111,7 @@ class Author:
 
         Args:
             limit: Number of authors to load
-            offset: 
+            offset
             ids[]: Array of ids
             name: Name of author(for search)
 
@@ -142,7 +144,7 @@ class Author:
             self, name: str, version: int, return_obj: bool = False
     ) -> Union["Author", None]:
         """Creates an Author
-        
+
         Args:
             name: The name of the author
             version: The version of author info
@@ -199,7 +201,7 @@ class Author:
         Args:
             author_id (str): Author ID
         """
-        
+
         url = f"{self.api.url}/author/{author_id}"
         URLRequest.request_url(
             url, "DELETE", headers=self.auth.get_bearer_token(), timeout=self.api.timeout
@@ -208,6 +210,7 @@ class Author:
 
 class ScanlationGroup:
     """Class providing Scanlation Group Information"""
+
     def __init__(self, auth=Union[Auth, None]) -> None:
         """Scanlation Group Information class
 
@@ -254,7 +257,7 @@ class ScanlationGroup:
 
         if resp["type"] != "scanlation_group" or not resp:
             raise ValueError(f"The data provided is not Author is : {resp['type']}",
-                            )
+                             )
 
         group = cls()
 
@@ -263,8 +266,8 @@ class ScanlationGroup:
         group.name = [attributes["name"]]
         if 'altNames' in attributes:
             group.name.append([altName["name"]
-                                for altName in attributes['altNames']
-                                ])
+                               for altName in attributes['altNames']
+                               ])
         group.website = attributes["website"]
         group.discord = attributes["discord"]
         group.twitter = attributes["twitter"]
@@ -415,7 +418,7 @@ class ScanlationGroup:
         Args:
             group_id (str): Author ID
         """
-        
+
         url = f"{self.api.url}/group/{group_id}"
         URLRequest.request_url(
             url, "DELETE", headers=self.auth.get_bearer_token(), timeout=self.api.timeout
@@ -424,6 +427,7 @@ class ScanlationGroup:
 
 class User:
     """Class providing user information"""
+
     def __init__(self, auth: Union[Auth, None]):
         self.auth = auth
         self.api = Api()
@@ -482,7 +486,8 @@ class User:
         user.relations = []
         if relationships:
             for relationship in relationships:
-                user.relations.append({relationship["type"]: relationship["id"]})
+                user.relations.append(
+                    {relationship["type"]: relationship["id"]})
 
         return user
 
@@ -580,7 +585,8 @@ class Follows:
             manga_id: The manga you want to follow
         """
         url = f"{self.api.url}/manga/{manga_id}/follow"
-        URLRequest.request_url(url, "POST", headers=self.auth.get_bearer_token(), timeout=self.api.timeout)
+        URLRequest.request_url(
+            url, "POST", headers=self.auth.get_bearer_token(), timeout=self.api.timeout)
 
     def unfollow_manga(self, manga_id: str) -> None:
         """Follow a manga
@@ -589,7 +595,8 @@ class Follows:
             manga_id: The manga you want to un follow
         """
         url = f"{self.api.url}/manga/{manga_id}/follow"
-        URLRequest.request_url(url, "DELETE", headers=self.auth.get_bearer_token(), timeout=self.api.timeout)
+        URLRequest.request_url(
+            url, "DELETE", headers=self.auth.get_bearer_token(), timeout=self.api.timeout)
 
 
 if __name__ == '__main__':

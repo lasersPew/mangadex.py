@@ -59,12 +59,16 @@ class Chapter:
         chapter.title = attributes["title"]
         chapter.volume = attributes["volume"] if attributes["volume"] != "null" else None
         chapter.chapter = (
-            float(attributes["chapter"]) if attributes["chapter"] is not None else None
+            float(attributes["chapter"]
+                  ) if attributes["chapter"] is not None else None
         )
         chapter.translated_language = attributes["translatedLanguage"]
-        chapter.publish_at = parse(attributes["publishAt"]) if attributes.get("publishAt") else None
-        chapter.created_at = parse(attributes["createdAt"]) if attributes.get("createdAt") else None
-        chapter.updated_at = parse(attributes["updatedAt"]) if attributes.get("updatedAt") else None
+        chapter.publish_at = parse(
+            attributes["publishAt"]) if attributes.get("publishAt") else None
+        chapter.created_at = parse(
+            attributes["createdAt"]) if attributes.get("createdAt") else None
+        chapter.updated_at = parse(
+            attributes["updatedAt"]) if attributes.get("updatedAt") else None
         for relations in resp["relationships"]:
             if relations["type"] == "scanlation_group":
                 chapter.group_id = relations["id"]
@@ -176,7 +180,8 @@ class Chapter:
         )
         return resp["volumes"]
 
-    def fetch_chapter_images(self) -> List[str]:  # maybe make this an async function?
+    # maybe make this an async function?
+    def fetch_chapter_images(self) -> List[str]:
         """
         Get the image links for the chapter
 
@@ -462,6 +467,7 @@ class Cover:
 
 class Tag:
     """Class for getting Tags"""
+
     def __init__(self) -> None:
         """Class used to get and parse tags"""
 
@@ -544,6 +550,7 @@ class Tag:
 
 class Manga:
     """Class for getting Manga Info"""
+
     def __init__(self, auth: Union[Auth, None] = None):
         self.auth = auth
         self.api = Api()
@@ -681,7 +688,8 @@ class Manga:
 
     def __eq__(self, other: Self) -> bool:
         my_vals = [self.manga_id, self.title, self.created_at, self.author_id]
-        other_vals = [other.manga_id, other.title, other.created_at, other.author_id]
+        other_vals = [other.manga_id, other.title,
+                      other.created_at, other.author_id]
         return my_vals == other_vals
 
     def __ne__(self, other: Self) -> bool:
@@ -1029,6 +1037,7 @@ class Manga:
 
 class MangaList(Manga):
     """Class for getting user's Manga List"""
+
     def __init__(self, auth=Auth):
         super().__init__(auth=auth)
 
@@ -1046,6 +1055,7 @@ class MangaList(Manga):
 
 class CustomList:
     """Class for getting users' custom lists"""
+
     def __init__(self, auth: Union[Auth, None] = None):
         self.auth = auth
         self.api = Api()
@@ -1200,7 +1210,8 @@ class CustomList:
             "visibility": visibility,
             "manga[]": manga,
         }
-        URLRequest.request_url(url, "POST", params=params, timeout=self.api.timeout)
+        URLRequest.request_url(url, "POST", params=params,
+                               timeout=self.api.timeout)
 
     def get_customlist(self, customlist_id: str, **kwargs) -> "CustomList":
         """
