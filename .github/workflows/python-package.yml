@@ -1,13 +1,21 @@
 name: CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ main, devel ]
+    paths: [ 'mangadex/**', 'pyproject.toml', 'uv.lock' ]
+  pull_request:
+    branches: [ main, devel ]
+    paths: [ 'mangadex/**', 'pyproject.toml', 'uv.lock' ]
+  workflow_dispatch:
+
 
 jobs:
-  build:
+  pip-build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.9", "3.10", "3.11"]
+        python-version: [ "3.9", "3.10", "3.11", "3.12", "3.13" ]
 
     steps:
       - uses: actions/checkout@v4
@@ -18,10 +26,10 @@ jobs:
       - name: Install deps
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install -e .[dev] || true  # if extras defined
+          pip install -r requirements.txt || true
+          pip install -e .[dev] || pip install -e .
 
-      - name: Install lint tools
+      - name: Install lint + test tools
         run: pip install flake8 pytest python-dotenv
 
       - name: Lint
@@ -29,3 +37,35 @@ jobs:
 
       - name: Test
         run: pytest --maxfail=1 --disable-warnings -q
+
+  conda_build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ "3.9", "3.10", "3.11", "3.12", "3.13" ]
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Add conda to system path
+        run: echo $CONDA/bin >> $GITHUB_PATH
+
+      - name: Create conda env + install deps
+        run: |
+          conda create -n testenv python=${{ matrix.python-version }} -y
+          source activate testenv
+          conda install -y flake8 pytest python-dotenv
+          pip install -e .[dev] || pip install -e .
+
+      - name: Lint
+        run: |
+          source activate testenv
+          flake8 mangadex
+
+      - name: Test
+        run: |
+          source activate testenv
+          pytest --maxfail=1 --disable-warnings -q
